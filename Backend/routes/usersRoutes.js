@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { AddUser, AllUsers, DeleteUser, UpdateUser } = require('../controllers/usersController');
+const { AddUser, AllUsers, DeleteUser, UpdateUser } = require('../controllers/userController');
 
 router.post('/AllUsers', AllUsers);
 router.post('/AddUser', AddUser);

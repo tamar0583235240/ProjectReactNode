@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { AddOrganization, AllOrganization, DeleteOrganization, UpdateOrganization } = require('../controllers/organizationsController');
+const { AddOrganization, AllOrganization, DeleteOrganization, UpdateOrganization } = require('../controllers/organizationController');
 
 router.post('/AllOrganization', AllOrganization);
 router.post('/AddOrganization', AddOrganization);

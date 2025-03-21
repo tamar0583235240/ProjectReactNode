@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { AddRole, AllRoles, DeleteRole, UpdateRole } = require('../controllers/rolesController');
+const { AddRole, AllRoles, DeleteRole, UpdateRole } = require('../controllers/roleController');
 
 router.post('/AllRoles', AllRoles);
 router.post('/AddRole', AddRole);

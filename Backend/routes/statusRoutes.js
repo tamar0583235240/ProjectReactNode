@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { AddStatus, AllStatuses, DeleteStatus, UpdateStatus } = require('../controllers/statusesController');
+const { AddStatus, AllStatuses, DeleteStatus, UpdateStatus } = require('../controllers/statusController');
 
 router.post('/AllStatuses', AllStatuses);
 router.post('/AddStatus', AddStatus);
