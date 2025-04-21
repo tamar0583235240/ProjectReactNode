@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ClipboardList, Users, LayoutDashboard, Shield, UserCog, Bell, BarChart3, CheckSquare, ChevronRight } from 'lucide-react';// import { Heebo } from 'next/font/google'
+
 import "../../style/HomePage.css"
 import PicManagementSystem from '../../assets/PicManagementSystem.jpg';
 import PicSmartAndIntuitiveDashboard from '../../assets/PicSmartAndIntuitiveDashboard.jpg';
@@ -18,8 +19,8 @@ const HomePage = () => {
               and employees to work efficiently and in a synchronized manner.
             </p>
             <div className="hero-buttons">
-              <button className="cta-btn">Get Started</button>
-              <button className="secondary-btn">Contact Us</button>
+              <button className="cta-btn">Sigh In</button>
+              <button className="secondary-btn">Sigh Up</button>
             </div>
           </div>
           <div className="hero-image">

@@ -6,7 +6,7 @@ const Login:React.FC = () => {
     return (
         <div>
             <div className="form-container">
-                <p>Login</p>
+                <p>Sigh up</p>
                 <form className="form">
                     <label>Email</label>
                     <input type="text" className="input" placeholder="Enter your email" />

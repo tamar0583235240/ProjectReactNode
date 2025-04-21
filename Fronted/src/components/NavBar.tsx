@@ -37,11 +37,11 @@ const NavBar = () => {
     };
 
     const handleLoginClick = () => {
-        alert('רישום');
+        alert('Sigh Up');
     };
 
     const handlesighInClick = () => {
-        alert('כניסה');
+        alert('Sing In');
     };
 
     return (
@@ -139,7 +139,7 @@ const NavBar = () => {
                                 textTransform: 'none',
                             }}
                         >
-                            LOGIN
+                            SIGH UP
                         </Button>
                         <Button
                             onClick={handlesighInClick}
