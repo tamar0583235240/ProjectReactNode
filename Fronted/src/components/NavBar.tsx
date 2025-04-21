@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom'; // ייבוא Link
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     const pages = ['HomePage', 'Projects', 'Tasks', 'EmployeeManagment'];
@@ -37,8 +36,16 @@ const NavBar = () => {
         setAnchorElUser(null);
     };
 
+    const handleLoginClick = () => {
+        alert('רישום');
+    };
+
+    const handlesighInClick = () => {
+        alert('כניסה');
+    };
+
     return (
-        <AppBar position="fixed" style={{ top: 0, width: '100%', zIndex: 100 }}> {/* שינוי ל-position: fixed */}
+        <AppBar position="fixed" style={{ top: 0, width: '100%', zIndex: 100 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -121,7 +128,31 @@ const NavBar = () => {
                             </Button>
                         ))}
                     </Box>
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
+                        <Button
+                            onClick={handleLoginClick}
+                            sx={{
+                                color: 'white',
+                                border: '1px solid white',
+                                padding: '5px 15px',
+                                marginRight: '10px',
+                                textTransform: 'none',
+                            }}
+                        >
+                            LOGIN
+                        </Button>
+                        <Button
+                            onClick={handlesighInClick}
+                            sx={{
+                                color: 'white',
+                                border: '1px solid white',
+                                padding: '5px 15px',
+                                marginRight: '10px',
+                                textTransform: 'none',
+                            }}
+                        >
+                            SIGN IN
+                        </Button>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -144,6 +175,7 @@ const NavBar = () => {
                             ))}
                         </Menu>
                     </Box>
+
                 </Toolbar>
             </Container>
         </AppBar>
