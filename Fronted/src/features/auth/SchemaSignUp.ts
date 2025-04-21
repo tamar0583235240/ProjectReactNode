@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const SchemaSighUp = z.object({
+export const SchemaSignUp = z.object({
     username: z.string().min(2, { message: "Username must contain at least 2 characters." }),
     password: z.string().min(6, { message: "A password must contain at least 6 characters." }),
     email: z.string().email({ message: "The email address is invalid." }),
@@ -40,4 +40,4 @@ export const SchemaSighUp = z.object({
 
 });
 
-export type ProjectData = z.infer<typeof SchemaSighUp>;
+export type FormData = z.infer<typeof SchemaSignUp>;

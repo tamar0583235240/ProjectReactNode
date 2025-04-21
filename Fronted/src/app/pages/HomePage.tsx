@@ -19,8 +19,8 @@ const HomePage = () => {
               and employees to work efficiently and in a synchronized manner.
             </p>
             <div className="hero-buttons">
-              <button className="cta-btn">Sigh In</button>
-              <button className="secondary-btn">Sigh Up</button>
+              <button className="cta-btn">Sign In</button>
+              <button className="secondary-btn">Sign Up</button>
             </div>
           </div>
           <div className="hero-image">

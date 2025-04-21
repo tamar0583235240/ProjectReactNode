@@ -5,7 +5,7 @@ import './App.css'
 import './style/Login.css'
 import { RouterProvider } from 'react-router'
 import router from './app/router'
-import Login from './features/auth/SighUp'
+import Login from './features/auth/SignUp'
 
 function App() {
   return (
