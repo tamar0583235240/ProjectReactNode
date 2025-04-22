@@ -61,7 +61,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    padding: 6rem 2% 5rem; /* Reduced side padding */
+    padding: 6rem 2% 5rem; 
     gap: 2rem;
     background: var(--accent3-color);
     position: relative;

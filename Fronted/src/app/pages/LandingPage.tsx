@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { ClipboardList, Users, LayoutDashboard, Shield, UserCog, Bell, BarChart3, CheckSquare, ChevronRight } from 'lucide-react';// import { Heebo } from 'next/font/google'
 
@@ -6,16 +7,38 @@ import "../../style/LandingPage.css"
 import PicManagementSystem from '../../assets/PicManagementSystem.jpg';
 import PicSmartAndIntuitiveDashboard from '../../assets/PicSmartAndIntuitiveDashboard.jpg';
 import PicEasyAndSecureLogin from '../../assets/PicEasyAndSecureLogin.jpg';
+import SignIn from './../../features/auth/SignIn';
+import SignUp from './../../features/auth/SignUp';
+
 const LandingPage = () => {
+    const navigate = useNavigate();
     const [openSignUpDialog, setOpenSignUpDialog] = React.useState(false)
     const [openSignInDialog, setOpenSignInDialog] = React.useState(false)
+    
     const handleSignUpClick = () => {
         setOpenSignUpDialog(true)
-      }
+    }
     
-      const handleCloseSignUpDialog = () => {
+    const handleCloseSignUpDialog = () => {
         setOpenSignUpDialog(false)
-      }
+    }
+    
+    const handleSignInClick = () => {
+        setOpenSignInDialog(true)
+    }
+    
+    const handleCloseSignInDialog = () => {
+        setOpenSignInDialog(false)
+    }
+    
+    const handleSuccessfulSignIn = () => {
+        navigate('/app');
+    }
+    
+    const handleSuccessfulSignUp = () => {
+        navigate('/app');
+    }
+    
     return (
         <div className="landing-page">
             <main>
@@ -27,8 +50,8 @@ const LandingPage = () => {
                             and employees to work efficiently and in a synchronized manner.
                         </p>
                         <div className="hero-buttons">
-                            <button className="cta-btn" onClick={handleSignInClick} >Sign In</button>
-                            <button className="secondary-btn"onClick={handleSignUpClick}>Sign Up</button>
+                            <button className="cta-btn" onClick={handleSignInClick}>Sign In</button>
+                            <button className="secondary-btn" onClick={handleSignUpClick}>Sign Up</button>
                         </div>
                     </div>
                     <div className="hero-image">
@@ -323,6 +346,18 @@ const LandingPage = () => {
                     <p>© {new Date().getFullYear()} All rights reserved to Hierarchical Task Management System</p>
                 </div>
             </footer>
+            
+            <SignIn 
+                open={openSignInDialog} 
+                onClose={handleCloseSignInDialog} 
+                onSuccess={handleSuccessfulSignIn} 
+            />
+            
+            <SignUp 
+                open={openSignUpDialog} 
+                onClose={handleCloseSignUpDialog} 
+                onSuccess={handleSuccessfulSignUp} 
+            />
         </div>
     )
 }
