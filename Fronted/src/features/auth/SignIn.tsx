@@ -17,20 +17,13 @@ interface SignInDialogProps {
 }
 
 const SignIn: React.FC<SignInDialogProps> = ({ open, onClose }) => {
-  const form = useForm<SignInFormData>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<SignInFormData>({
     resolver: zodResolver(SchemaSignIn),
     defaultValues: {
       username: "",
       password: "",
     },
   })
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = form
 
   const onSubmit = (data: SignInFormData) => {
     console.log(data)
@@ -75,7 +68,7 @@ const SignIn: React.FC<SignInDialogProps> = ({ open, onClose }) => {
       </DialogContent>
 
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={() => { onClose(); reset(); }} color="primary">
           Cancel
         </Button>
         <Button

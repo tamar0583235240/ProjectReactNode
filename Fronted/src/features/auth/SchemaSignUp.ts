@@ -34,7 +34,7 @@ export const SchemaSignUp = z.object({
         }),
 
 
-    cvvSchema: z.string()
+    cvv: z.string()
         .regex(/^\d{3,4}$/, { message: "The CVV must be 3 or 4 digits." })
 
 
