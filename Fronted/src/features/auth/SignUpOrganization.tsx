@@ -9,15 +9,17 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { SchemaOrganization, type OrganizationFormData } from "./SchemaSignUpOrganization";
-import { type FormData } from "./SchemaSignUp";
-import {useAddUserMutation } from "./authApi";
+import { SchemaOrganization, type OrganizationFormData } from "../auth/SchemaSignUpOrganization";
+import { type FormData } from "../auth/SchemaSignUp";
+import { useAddUserMutation, useAddOrganizationMutation } from "./authApi";
+import { User } from "../../types/User"
+import { Organization } from "../../types/Organization"
 
 interface OrganizationDialogProps {
     open: boolean
     onClose: () => void
     userData: FormData | null
-    onSuccess?: () => void // פרופ חדש
+    onSuccess?: () => void 
 }
 
 const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, userData, onSuccess }) => {
@@ -28,22 +30,45 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
             organization_description: "",
             organization_address: "",
             organization_phone: "",
+            manager_id: null ,
         },
     })
 
-
+    const [addOrganization] = useAddOrganizationMutation();
+    const [addUser] = useAddUserMutation();
+    
     const onSubmit = async (organizationData: OrganizationFormData) => {
         console.log("User data:", userData);
         console.log("Organization data:", organizationData);
-        if (userData) {
-            const response = await useAddUserMutation(userData);
-            alert("Registration completed successfully!");
-            onClose();
-            reset();
-            if (onSuccess) {
-                onSuccess();
+        if(organizationData){
+            const organization:Organization = {
+                organization_name: organizationData.organization_name,
+                organization_description: organizationData.organization_description,
+                organization_address: organizationData.organization_address,
+                organization_phone: organizationData.organization_phone,
+                manager_id: null,
+            };
+            const resOrganization = await addOrganization(organization);
+            console.log("Organization registration response:", resOrganization);
+            if (userData) {
+                const user: User = {
+                    user_name: userData.username,
+                    password: userData.password,
+                    email: userData.email,
+                    role: "manager",
+                    manager_id: null,
+                    organization_id: resOrganization._id,
+                  };              
+                const response = await addUser(user);
+                alert("Registration completed successfully!");
+                onClose();
+                reset();
+                if (onSuccess) {
+                    onSuccess();
+                }
             }
         }
+  
     };
 
     return (

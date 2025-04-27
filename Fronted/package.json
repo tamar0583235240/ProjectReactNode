@@ -17,6 +17,7 @@
     "@mui/material": "^6.4.8",
     "@reduxjs/toolkit": "^2.7.0",
     "lucide-react": "^0.503.0",
+    "mongoose": "^8.14.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.1",
