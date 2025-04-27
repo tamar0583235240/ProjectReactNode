@@ -5,12 +5,12 @@ const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/dbConn");
 const mongoose = require('mongoose');
 
-const projectsRoutes = require('./routes/projects');
-const rolesRoutes = require('./routes/roles');
-const statusesRoutes = require('./routes/statuses');
-const tasksRoutes = require('./routes/tasks');
-const usersRoutes = require('./routes/users');
-const organizationsRoutes = require('./routes/organizations');
+const projectsRoutes = require('./routes/projectsRoutes');
+const rolesRoutes = require('./routes/rolesRoutes');
+const statusesRoutes = require('./routes/statusesRoutes');
+const tasksRoutes = require('./routes/tasksRoutes');
+const usersRoutes = require('./routes/usersRoutes');
+const organizationsRoutes = require('./routes/organizationsRoutes');
 
 const PORT = process.env.PORT || 7001;
 const app = express();
