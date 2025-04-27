@@ -12,7 +12,7 @@ const tasksRoutes = require('./routes/tasksRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const organizationsRoutes = require('./routes/organizationsRoutes');
 
-const PORT = process.env.PORT || 7001;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 connectDB();
@@ -27,8 +27,11 @@ app.use("/projects", projectsRoutes);
 app.use("/roles", rolesRoutes);
 app.use("/statuses", statusesRoutes);
 app.use("/tasks", tasksRoutes);
-app.use("/users", usersRoutes);
-app.use("/organizations", organizationsRoutes);
+// app.use("/users", usersRoutes);
+// app.use("/organizations", organizationsRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/organizations", organizationsRoutes);
+
 
 // Home route
 app.get("/", (req, res) => {
