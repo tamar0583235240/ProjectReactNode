@@ -20,7 +20,14 @@ export const authApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Organization"],
         }),
+        // getRoleByName: builder.query<Role, Role>({
+        //     query: (id) => `recipes/${id}`,
+        //     providesTags: (result, error, id) => [{ type: "Recipe", id }],
+        // }),
+        getRoleByName: builder.query<{ _id: string }, string>({
+            query: (roleName) => `roles/${roleName}`,
+        }),
     })
 })
 
-export const { useAddUserMutation,useAddOrganizationMutation } = authApi;
+export const { useAddUserMutation, useAddOrganizationMutation ,useGetRoleByNameQuery} = authApi;

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { SchemaOrganization, type OrganizationFormData } from "../auth/SchemaSignUpOrganization";
 import { type FormData } from "../auth/SchemaSignUp";
-import { useAddUserMutation, useAddOrganizationMutation } from "./authApi";
+import { useAddUserMutation, useAddOrganizationMutation , useLazyGetRoleByNameQuery } from "./authApi";
 import { User } from "../../types/User"
 import { Organization } from "../../types/Organization"
 
@@ -30,45 +30,89 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
             organization_description: "",
             organization_address: "",
             organization_phone: "",
-            manager_id: null ,
+            // manager_id: null ,
         },
     })
 
     const [addOrganization] = useAddOrganizationMutation();
     const [addUser] = useAddUserMutation();
+    const [getRoleByName] = useLazyGetRoleByNameQuery();
     
+    // const onSubmit = async (organizationData: OrganizationFormData) => {
+    //     console.log("User data:", userData);
+    //     console.log("Organization data:", organizationData);
+    //     try {
+    //         if(organizationData){
+    //             const organization:Organization = {
+    //                 organization_name: organizationData.organization_name,
+    //                 organization_description: organizationData.organization_description,
+    //                 organization_address: organizationData.organization_address,
+    //                 organization_phone: organizationData.organization_phone,
+    //                 manager_id: null,
+    //             };
+    //             const resOrganization = await addOrganization(organization);
+    //             console.log("Organization registration response:", resOrganization);
+    //             if (userData) {
+    //                 const user: User = {
+    //                     user_name: userData.username,
+    //                     password: userData.password,
+    //                     email: userData.email,
+    //                     role: "manager",
+    //                     manager_id: null,
+    //                     organization_id: resOrganization.data._id,
+    //                   };              
+    //                 const response = await addUser(user);
+    //                 alert("Registration completed successfully!");
+    //                 onClose();
+    //                 reset();
+    //                 if (onSuccess) {
+    //                     onSuccess();
+    //                 }
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log("Error during registration:", error);
+    //     }
+  
+    // };
+
     const onSubmit = async (organizationData: OrganizationFormData) => {
         console.log("User data:", userData);
         console.log("Organization data:", organizationData);
-        if(organizationData){
-            const organization:Organization = {
+    
+        if (organizationData && userData) {
+            const organization: Organization = {
                 organization_name: organizationData.organization_name,
                 organization_description: organizationData.organization_description,
                 organization_address: organizationData.organization_address,
                 organization_phone: organizationData.organization_phone,
                 manager_id: null,
             };
+    
             const resOrganization = await addOrganization(organization);
             console.log("Organization registration response:", resOrganization);
-            if (userData) {
-                const user: User = {
-                    user_name: userData.username,
-                    password: userData.password,
-                    email: userData.email,
-                    role: "manager",
-                    manager_id: null,
-                    organization_id: resOrganization._id,
-                  };              
-                const response = await addUser(user);
-                alert("Registration completed successfully!");
-                onClose();
-                reset();
-                if (onSuccess) {
-                    onSuccess();
-                }
+    
+            // עכשיו שולפים את ה-Role
+            const roleResponse = await getRoleByName("manager").unwrap(); // unwrap מחלץ ישר את ה-data
+            console.log("Role response:", roleResponse);
+    
+            const user: User = {
+                user_name: userData.username,
+                password: userData.password,
+                email: userData.email,
+                role: roleResponse._id, // שימי לב לשינוי כאן!!!
+                manager_id: null,
+                organization_id: resOrganization.data._id, // resOrganization צריך להיות data
+            };
+    
+            const response = await addUser(user);
+            alert("Registration completed successfully!");
+            onClose();
+            reset();
+            if (onSuccess) {
+                onSuccess();
             }
         }
-  
     };
 
     return (
