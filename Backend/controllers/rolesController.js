@@ -1,5 +1,4 @@
 const Role = require('../models/Role');
-
 exports.AddRole = async (req, res) => {
     try {
         const role = await Role.create(req.body);
@@ -53,5 +52,20 @@ exports.UpdateRole = async (req, res) => {
     } catch (error) {
         console.error('Failed to update role:', error);
         res.status(500).json({ message: 'Failed to update role', error: error.message });
+    }
+};
+exports.getRoleByName = async (req, res) => {
+    try {
+        const roleName = req.params.name;
+        const role = await Role.findOne({ role_name: roleName });
+
+        if (!role) {
+            return res.status(404).json({ message: "Role not found" });
+        }
+
+        res.json(role);
+    } catch (error) {
+        console.error("Error fetching role by name:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
