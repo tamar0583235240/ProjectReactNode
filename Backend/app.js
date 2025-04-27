@@ -27,8 +27,11 @@ app.use("/projects", projectsRoutes);
 app.use("/roles", rolesRoutes);
 app.use("/statuses", statusesRoutes);
 app.use("/tasks", tasksRoutes);
-app.use("/users", usersRoutes);
-app.use("/organizations", organizationsRoutes);
+// app.use("/users", usersRoutes);
+// app.use("/organizations", organizationsRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/organizations", organizationsRoutes);
+
 
 // Home route
 app.get("/", (req, res) => {
