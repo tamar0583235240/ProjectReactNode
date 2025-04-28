@@ -6,7 +6,7 @@ export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         addUser: builder.mutation<User, User>({
             query: (user) => ({
-                url: "users/AddUser",
+                url: 'users/AddUser',
                 method: "POST",
                 body: user,
             }),
@@ -15,14 +15,17 @@ export const authApi = api.injectEndpoints({
 
         addOrganization: builder.mutation<Organization, Organization>({
             query: (organization) => ({
-                url: "organizations/AddOrganization",
+                url: 'organizations/AddOrganization',
                 method: "POST",
                 body: organization,
             }),
             invalidatesTags: ["Organization"],
         }),
         getRoleByName: builder.query<Role, string>({
-            query: (roleName) => `roles/${roleName}`,
+            query: (roleName) => ({
+                url: `roles/getRoleByName/${roleName}`,
+                method: 'GET',
+            }),
         }),
     })
 })
