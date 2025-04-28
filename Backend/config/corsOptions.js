@@ -1,4 +1,4 @@
-var whitelist = ['http://localhost:5173/']
+var whitelist = ['http://localhost:5173']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
