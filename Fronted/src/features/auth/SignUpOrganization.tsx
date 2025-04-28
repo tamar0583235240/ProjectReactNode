@@ -11,7 +11,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { SchemaOrganization, type OrganizationFormData } from "../auth/SchemaSignUpOrganization";
 import { type FormData } from "../auth/SchemaSignUp";
-import { useAddUserMutation, useAddOrganizationMutation , useLazyGetRoleByNameQuery } from "./authApi";
+import { useAddUserMutation, useAddOrganizationMutation, useLazyGetRoleByNameQuery } from "./authApi";
 import { User } from "../../types/User"
 import { Organization } from "../../types/Organization"
 
@@ -19,7 +19,7 @@ interface OrganizationDialogProps {
     open: boolean
     onClose: () => void
     userData: FormData | null
-    onSuccess?: () => void 
+    onSuccess?: () => void
 }
 
 const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, userData, onSuccess }) => {
@@ -37,7 +37,7 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
     const [addOrganization] = useAddOrganizationMutation();
     const [addUser] = useAddUserMutation();
     const [getRoleByName] = useLazyGetRoleByNameQuery();
-    
+
     // const onSubmit = async (organizationData: OrganizationFormData) => {
     //     console.log("User data:", userData);
     //     console.log("Organization data:", organizationData);
@@ -73,13 +73,18 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
     //     } catch (error) {
     //         console.log("Error during registration:", error);
     //     }
-  
+
     // };
 
     const onSubmit = async (organizationData: OrganizationFormData) => {
+        if (!organizationData || !userData) {
+            console.error("Missing organization or user data.");
+            return;
+        }
+
         console.log("User data:", userData);
         console.log("Organization data:", organizationData);
-    
+
         if (organizationData && userData) {
             const organization: Organization = {
                 organization_name: organizationData.organization_name,
@@ -87,24 +92,25 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
                 organization_address: organizationData.organization_address,
                 organization_phone: organizationData.organization_phone,
                 manager_id: null,
-            };
-    
-            const resOrganization = await addOrganization(organization);
+              };
+              
+
+            const resOrganization = await addOrganization(organization).unwrap();
             console.log("Organization registration response:", resOrganization);
-    
-            // עכשיו שולפים את ה-Role
-            const roleResponse = await getRoleByName("manager").unwrap(); // unwrap מחלץ ישר את ה-data
-            console.log("Role response:", roleResponse);
-    
+
+
+            const roleResponse = await getRoleByName("Manager").unwrap();
+            console.log("Fetched role:", roleResponse);
             const user: User = {
                 user_name: userData.username,
                 password: userData.password,
                 email: userData.email,
-                role: roleResponse._id, // שימי לב לשינוי כאן!!!
+                role: roleResponse._id, 
                 manager_id: null,
-                organization_id: resOrganization.data._id, // resOrganization צריך להיות data
+                organization_id: resOrganization.organization_name,
             };
-    
+            
+
             const response = await addUser(user);
             alert("Registration completed successfully!");
             onClose();

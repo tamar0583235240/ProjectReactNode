@@ -1,5 +1,6 @@
 import { api } from "../../app/api";
 import { Organization } from "../../types/Organization";
+import { Role } from "../../types/Role";
 import { User } from "../../types/User";
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -20,14 +21,10 @@ export const authApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Organization"],
         }),
-        // getRoleByName: builder.query<Role, Role>({
-        //     query: (id) => `recipes/${id}`,
-        //     providesTags: (result, error, id) => [{ type: "Recipe", id }],
-        // }),
-        getRoleByName: builder.query<{ _id: string }, string>({
+        getRoleByName: builder.query<Role, string>({
             query: (roleName) => `roles/${roleName}`,
         }),
     })
 })
 
-export const { useAddUserMutation, useAddOrganizationMutation ,useGetRoleByNameQuery} = authApi;
+export const { useAddUserMutation, useAddOrganizationMutation ,useLazyGetRoleByNameQuery} = authApi;
