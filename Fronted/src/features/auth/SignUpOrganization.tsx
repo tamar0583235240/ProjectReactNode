@@ -107,10 +107,9 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
                 email: userData.email,
                 role: roleResponse._id, 
                 manager_id: null,
-                organization_id: resOrganization.organization_name,
+                organization_id: resOrganization._id,
             };
-            
-
+            console.log("User data after change:", user);
             const response = await addUser(user);
             alert("Registration completed successfully!");
             onClose();
