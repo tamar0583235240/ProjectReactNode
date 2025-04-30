@@ -1,6 +1,7 @@
 const User = require("../models/User")
 exports.SignUp = async (req, res) => {
     try {
+        console.log("aaaa");
         const { user_name, password, email, role, manager_id, organization_id } = req.body
         if (!user_name || !password || !email || !role || !organization_id) {
             return res.status(400).json({ message: 'All fields are required' })
