@@ -9,6 +9,7 @@ exports.SignUp = async (req, res) => {
         if (existingUser) {
           return res.status(400).json({ message: 'This email already exists in the system' });
         }
+
         const hashedPwd = await bcrypt.hash(password, 10)
         const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
         const user = await User.create(userObject)
