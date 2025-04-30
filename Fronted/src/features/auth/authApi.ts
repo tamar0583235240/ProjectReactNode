@@ -4,9 +4,9 @@ import { Role } from "../../types/Role";
 import { User } from "../../types/User";
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        addUser: builder.mutation<User, User>({
+        signUp: builder.mutation<User, User>({
             query: (user) => ({
-                url: 'users/AddUser',
+                url: 'auth/SignUp',
                 method: "POST",
                 body: user,
             }),
@@ -30,4 +30,4 @@ export const authApi = api.injectEndpoints({
     })
 })
 
-export const { useAddUserMutation, useAddOrganizationMutation ,useLazyGetRoleByNameQuery} = authApi;
+export const { useSignUpMutation, useAddOrganizationMutation ,useLazyGetRoleByNameQuery} = authApi;
