@@ -25,7 +25,7 @@ exports.SignUp = async (req, res) => {
         res.status(500).json({ message: 'Failed to add user', error: error.message });
     }
 };
-const SignIn = async (req,res)=>{
+exports.SignIn = async (req,res)=>{
     const { user_name, password } = req.body
     if (!user_name || !password) {
         return res.status(400).json({message:'All fields are required'})
@@ -44,4 +44,3 @@ const SignIn = async (req,res)=>{
     }
 
 }
-module.exports = {SignIn, SignUp}
