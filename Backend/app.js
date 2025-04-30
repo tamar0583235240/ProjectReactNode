@@ -29,6 +29,8 @@ app.use("/api/statuses", statusesRoutes);
 app.use("/api/tasks", tasksRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/organizations", organizationsRoutes);
+app.use("/api/auth", require("./routes/authRoute"))
+
 
 // Home route
 app.get("/api", (req, res) => {
