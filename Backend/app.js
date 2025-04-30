@@ -11,6 +11,7 @@ const statusesRoutes = require('./routes/statusesRoutes');
 const tasksRoutes = require('./routes/tasksRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const organizationsRoutes = require('./routes/organizationsRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const PORT = process.env.PORT || 7001;
 const app = express();
@@ -29,7 +30,7 @@ app.use("/api/statuses", statusesRoutes);
 app.use("/api/tasks", tasksRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/organizations", organizationsRoutes);
-app.use("/api/auth", require("./routes/authRoute"))
+app.use("/api/auth",authRoutes )
 
 
 // Home route
