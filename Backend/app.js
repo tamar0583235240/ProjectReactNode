@@ -33,6 +33,7 @@ app.use("/api/organizations", organizationsRoutes);
 app.use("/api/auth",authRoutes )
 
 
+
 // Home route
 app.get("/", (req, res) => {
     res.send("this is the home page");
