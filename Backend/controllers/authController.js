@@ -2,9 +2,10 @@ const User = require("../models/User")
 exports.SignUp = async (req, res) => {
     try {
         const { user_name, password, email, role, manager_id, organization_id } = req.body
-        if (!user_name || !password||!email || !role || !organization_id) {
-            return res.status(400).json({ message: 'All fields are required' })
-        }
+        if (!user.user_name || !user.password || !user.email || !user.role || !user.organization_id) {
+            console.error("Missing required user fields:", user);
+            return;
+          }
         const existingUser = await User.findOne({ email });
         if (existingUser) {
           return res.status(400).json({ message: 'This email already exists in the system' });
