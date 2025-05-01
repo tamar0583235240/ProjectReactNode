@@ -5,12 +5,13 @@ const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/dbConn");
 const mongoose = require('mongoose');
 
-const projectsRoutes = require('./routes/projects');
-const rolesRoutes = require('./routes/roles');
-const statusesRoutes = require('./routes/statuses');
-const tasksRoutes = require('./routes/tasks');
-const usersRoutes = require('./routes/users');
-const organizationsRoutes = require('./routes/organizations');
+const projectsRoutes = require('./routes/projectsRoutes');
+const rolesRoutes = require('./routes/rolesRoutes');
+const statusesRoutes = require('./routes/statusesRoutes');
+const tasksRoutes = require('./routes/tasksRoutes');
+const usersRoutes = require('./routes/usersRoutes');
+const organizationsRoutes = require('./routes/organizationsRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const PORT = process.env.PORT || 7001;
 const app = express();
@@ -23,12 +24,14 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Routes
-app.use("/projects", projectsRoutes);
-app.use("/roles", rolesRoutes);
-app.use("/statuses", statusesRoutes);
-app.use("/tasks", tasksRoutes);
-app.use("/users", usersRoutes);
-app.use("/organizations", organizationsRoutes);
+app.use("/api/projects", projectsRoutes);
+app.use("/api/roles", rolesRoutes);
+app.use("/api/statuses", statusesRoutes);
+app.use("/api/tasks", tasksRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/organizations", organizationsRoutes);
+app.use("/api/auth",authRoutes )
+
 
 // Home route
 app.get("/", (req, res) => {
