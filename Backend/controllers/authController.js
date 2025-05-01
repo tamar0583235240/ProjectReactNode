@@ -1,6 +1,6 @@
 const User = require("../models/User")
 const bcrypt = require('bcrypt');
-const jwt= require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 exports.SignUp = async (req, res) => {
     try {
@@ -21,15 +21,32 @@ exports.SignUp = async (req, res) => {
                 user,
                 message: `New user ${user.user_name} created`
             });
-
+        }
+        const roleFromDB = await Role.findOne({ user_name: 'Manager' });
+        if (!roleFromDB) {
+            return res.status(500).json({ message: 'Role not found in system' });
+        }
+        if (role === roleFromDB._id.toString()) {
+            const accessToken = jwt.sign(
+                {
+                    userId: user._id,
+                    role: user.role,
+                    organization_id: user.organization_id,
+                },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+            );
+            res.json({ accessToken: accessToken })
 
         } else {
             return res.status(400).json({ message: 'Invalid user received' })
         }
-    } catch (error) {
-        console.error('Failed to add user:', error);
-        res.status(500).json({ message: 'Failed to add user', error: error.message });
     }
+
+     catch (error) {
+    console.error('Failed to add user:', error);
+    res.status(500).json({ message: 'Failed to add user', error: error.message });
+}
 };
 exports.SignIn = async (req, res) => {
     try {
@@ -48,17 +65,17 @@ exports.SignIn = async (req, res) => {
         if (!match) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
-        const  accessToken = jwt.sign(
+        const accessToken = jwt.sign(
             {
-              userId: user._id,
-              role: user.role,
-              organization_id: user.organization_id,
+                userId: user._id,
+                role: user.role,
+                organization_id: user.organization_id,
             },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '1h' }
 
-          );
-          res.json({accessToken:accessToken})
+        );
+        res.json({ accessToken: accessToken })
 
     } catch (err) {
         console.error('Login error:', err);
