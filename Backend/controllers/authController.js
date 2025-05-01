@@ -13,9 +13,9 @@ exports.SignUp = async (req, res) => {
         const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
         const user = await User.create(userObject)
         if (user) {
-            return res.status(201).json(user,{
-                message: `New user ${user.user_name}
-            created` })
+            return res.status(201).json(user, {
+                message: `New user ${user.user_name} created`
+              });
             
         } else {
             return res.status(400).json({ message: 'Invalid user received' })
