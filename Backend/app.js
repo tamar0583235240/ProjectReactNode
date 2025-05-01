@@ -34,7 +34,7 @@ app.use("/api/auth",authRoutes )
 
 
 // Home route
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
     res.send("this is the home page");
 });
 
