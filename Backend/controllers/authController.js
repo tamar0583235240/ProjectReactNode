@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 exports.SignUp = async (req, res) => {
     try {
         const { user_name, password, email, role, manager_id, organization_id } = req.body
-        if (!user_name || !password || !email || !organization_id) {
+        if (!user_name || !password || !email || !role|| !organization_id) {
             return res.status(400).json({ message: 'All fields are required' });
         }
         console.log(req.body)
@@ -14,20 +14,24 @@ exports.SignUp = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'This email already exists in the system' });
         }
-        const hashedPwd = await bcrypt.hash(password, 10)
-        const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
-        const user = await User.create(userObject)
-        if (user) {
-            return res.status(201).json({
-                user,
-                message: `New user ${user.user_name} created`
-            });
-        }
         const roleFromDB = await Role.findOne({ user_name: 'Manager' });
         if (!roleFromDB) {
             return res.status(500).json({ message: 'Role not found in system' });
         }
-        if (role === roleFromDB._id.toString()) {
+        const hashedPwd = await bcrypt.hash(password, 10)
+        const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
+        const user = await User.create(userObject)
+        // if (user) {
+        //     return res.status(201).json({
+        //         user,
+        //         message: `New user ${user.user_name} created`
+        //     });
+        // }
+        if(!user){
+            return res.status(400).json({ message: 'User creation failed' })
+        }
+     
+        // if (role === roleFromDB._id.toString()) {
             const accessToken = jwt.sign(
                 {
                     userId: user._id,
@@ -37,11 +41,17 @@ exports.SignUp = async (req, res) => {
                 process.env.JWT_SECRET,
                 { expiresIn: '1h' }
             );
-            res.json({ accessToken: accessToken })
+            // res.json({ accessToken: accessToken })
+            
+          return res.status(201).json({
+            user,
+            accessToken,
+            message: `New user ${user.user_name} created`
+        });
 
-        } else {
-            return res.status(400).json({ message: 'Invalid user received' })
-        }
+        // } else {
+            // return res.status(400).json({ message: 'Invalid user received' })
+        // }
     }
 
      catch (error) {
