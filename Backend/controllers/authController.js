@@ -1,7 +1,7 @@
 const User = require("../models/User")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const Role = require('../models/Role');
+// const Role = require('../models/Role');
 
 
 exports.SignUp = async (req, res) => {
@@ -20,10 +20,10 @@ exports.SignUp = async (req, res) => {
         }
        
        
-        const roleFromDB = await Role.findOne({ role_name: 'Manager' });
-        if (!roleFromDB) {
-            return res.status(500).json({ message: 'Role not found in system' });
-        }
+        // const roleFromDB = await Role.findOne({ role_name: 'Manager' });
+        // if (!roleFromDB) {
+        //     return res.status(500).json({ message: 'Role not found in system' });
+        // }
        
 
         const hashedPwd = await bcrypt.hash(password, 10)
@@ -48,7 +48,7 @@ exports.SignUp = async (req, res) => {
                     role: user.role,
                     organization_id: user.organization_id,
                 },
-                process.env.JWT_SECRET,
+                process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1h' }
             );
             // res.json({ accessToken: accessToken })
