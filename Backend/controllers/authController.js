@@ -1,7 +1,7 @@
 const User = require("../models/User")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-// const Role = require('../models/Role');
+
 
 
 exports.SignUp = async (req, res) => {
@@ -20,28 +20,19 @@ exports.SignUp = async (req, res) => {
         }
        
        
-        // const roleFromDB = await Role.findOne({ role_name: 'Manager' });
-        // if (!roleFromDB) {
-        //     return res.status(500).json({ message: 'Role not found in system' });
-        // }
        
 
         const hashedPwd = await bcrypt.hash(password, 10)
         const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
         const user = await User.create(userObject)
-        // if (user) {
-        //     return res.status(201).json({
-        //         user,
-        //         message: `New user ${user.user_name} created`
-        //     });
-        // }
+  
       
 
         if(!user){
             return res.status(400).json({ message: 'User creation failed' })
         }
      
-        // if (role === roleFromDB._id.toString()) {
+     
             const accessToken = jwt.sign(
                 {
                     userId: user._id,
@@ -51,7 +42,12 @@ exports.SignUp = async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1h' }
             );
-            // res.json({ accessToken: accessToken })
+            // res.cookie("accessToken", accessToken, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === "production", // רק ב-HTTPS בפרודקשן
+            //     sameSite: "Strict",
+            //     maxAge: 3600000, // שעה
+            // });
      
             
           return res.status(201).json({
@@ -60,9 +56,7 @@ exports.SignUp = async (req, res) => {
             message: `New user ${user.user_name} created`
         });
 
-        // } else {
-            // return res.status(400).json({ message: 'Invalid user received' })
-        // }
+       
     }
 
      catch (error) {

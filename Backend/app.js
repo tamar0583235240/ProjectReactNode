@@ -16,6 +16,9 @@ const authRoutes = require('./routes/authRoutes');
 const PORT = process.env.PORT || 7001;
 const app = express();
 
+// const cookieParser = require("cookie-parser");
+// app.use(cookieParser());
+
 connectDB();
 
 // Middlewares
