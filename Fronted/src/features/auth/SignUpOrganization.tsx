@@ -52,30 +52,34 @@ const OrganizationDialog: React.FC<OrganizationDialogProps> = ({ open, onClose, 
                 organization_address: organizationData.organization_address,
                 organization_phone: organizationData.organization_phone,
                 manager_id: null,
-              };
-              
-
-            const resOrganization = await addOrganization(organization).unwrap();
-            console.log("Organization registration response:", resOrganization);
-
-
-            const roleResponse = await getRoleByName("Manager").unwrap();
-            console.log("Fetched role:", roleResponse);
-            const user: User = {
-                user_name: userData.username,
-                password: userData.password,
-                email: userData.email,
-                role: roleResponse._id, 
-                manager_id: null,
-                organization_id: resOrganization._id,
             };
-            console.log("User data after change:", user);
-            const response = await addUser(user);
-            alert("Registration completed successfully!");
-            onClose();
-            reset();
-            if (onSuccess) {
-                onSuccess();
+            try {
+
+                const resOrganization = await addOrganization(organization).unwrap();
+                console.log("Organization registration response:", resOrganization);
+
+
+                const roleResponse = await getRoleByName("Manager").unwrap();
+                console.log("Fetched role:", roleResponse);
+                const user: User = {
+                    user_name: userData.username,
+                    password: userData.password,
+                    email: userData.email,
+                    role: roleResponse._id,
+                    manager_id: null,
+                    organization_id: resOrganization._id,
+                };
+                console.log("User data after change:", user);
+                const response = await addUser(user).unwrap();
+                alert("Registration completed successfully!");
+                onClose();
+                reset();
+                if (onSuccess) {
+                    onSuccess();
+                }
+            } catch (error: any) {
+                console.error("Registration failed:", error);
+                alert("Registration failed: " + (error?.data?.message || "Unknown error"));
             }
         }
     };
