@@ -6,21 +6,26 @@ const Role = require('../models/Role');
 
 exports.SignUp = async (req, res) => {
     try {
+        console.log("1111");
         const { user_name, password, email, role, manager_id, organization_id } = req.body
         if (!user_name || !password || !email || !role|| !organization_id) {
             return res.status(400).json({ message: 'All fields are required' });
         }
-        console.log(req.body)
+        console.log("2222");
+
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'This email already exists in the system' });
         }
+        console.log("3333");
        
         const roleFromDB = await Role.findOne({ role_name: 'Manager' });
         if (!roleFromDB) {
             return res.status(500).json({ message: 'Role not found in system' });
         }
+        console.log("4444");
+
         const hashedPwd = await bcrypt.hash(password, 10)
         const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
         const user = await User.create(userObject)
@@ -30,6 +35,8 @@ exports.SignUp = async (req, res) => {
         //         message: `New user ${user.user_name} created`
         //     });
         // }
+        console.log("5555");
+
         if(!user){
             return res.status(400).json({ message: 'User creation failed' })
         }
@@ -45,6 +52,7 @@ exports.SignUp = async (req, res) => {
                 { expiresIn: '1h' }
             );
             // res.json({ accessToken: accessToken })
+        console.log("666");
             
           return res.status(201).json({
             user,
