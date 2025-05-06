@@ -16,10 +16,11 @@ exports.SignUp = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'This email already exists in the system' });
         }
-        // const roleFromDB = await Role.findOne({ user_name: 'Manager' });
-        // if (!roleFromDB) {
-        //     return res.status(500).json({ message: 'Role not found in system' });
-        // }
+       
+        const roleFromDB = await Role.findOne({ role_name: 'Manager' });
+        if (!roleFromDB) {
+            return res.status(500).json({ message: 'Role not found in system' });
+        }
         const hashedPwd = await bcrypt.hash(password, 10)
         const userObject = { user_name, password: hashedPwd, email, role, manager_id, organization_id }
         const user = await User.create(userObject)
