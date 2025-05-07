@@ -10,11 +10,11 @@ import NotFound from "./pages/NotFound";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <LandingPage />,
+        element: <LandingPage/>,
         index: true,
     },
     {
-        path: "app",
+        path: "/app",
         element: <AppLayout />,
         children: [
             {path:"app", element: <HomePage />,},
