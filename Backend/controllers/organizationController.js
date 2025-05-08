@@ -1,4 +1,4 @@
-const Organization = require('../models/Organization');
+const Organization = require('d:/ProjectReactNode/Backend/models/Organization');
 
 exports.AddOrganization = async (req, res) => {
     const organization = await Organization.create(req.body);

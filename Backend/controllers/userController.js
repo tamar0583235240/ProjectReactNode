@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('d:/ProjectReactNode/Backend/models/User');
 
 exports.AddUser = async (req, res) => {
     try {
