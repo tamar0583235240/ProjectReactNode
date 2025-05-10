@@ -29,9 +29,9 @@ exports.SignUp = async (req, res) => {
             // { expiresIn: '1h' }
         );
         return res.status(201).json({
-            user,
+            // user,
             accessToken,
-            message: `New user ${user.user_name} created`
+            // message: `New user ${user.user_name} created`
         });
     }
     catch (error) {
